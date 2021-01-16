@@ -14,6 +14,10 @@ refs.text.addEventListener('input', _.debounce(onInputName, 500));
 function onInputName(event) {
   const inputName = event.target.value.toLowerCase();
   console.log(inputName);
+  clearList();
+  if (!inputName) {
+    return;
+  }
   fetchCountries(inputName).then(createListMarkup).then(attachToList);
 }
 
@@ -24,7 +28,6 @@ function createListMarkup(listItems) {
 
   if (listItems.length > 10) {
     notifications.onOverflow();
-    return '';
   }
 
   return listItems.map(item => `<li>${item.name}</li>`).join('');
@@ -34,10 +37,14 @@ function attachToList(listMarkup) {
   refs.list.innerHTML = listMarkup;
 }
 
-const baseUrl = 'https://restcountries.eu/rest/v2/name/';
-const searchQuery = 'Spain';
-fetch(baseUrl + searchQuery)
-  .then(response => response.json())
-  .then(json => console.log(json));
+function clearList() {
+  refs.list.innerHTML = '';
+}
 
-fetchCountries('Ukraine');
+// const baseUrl = 'https://restcountries.eu/rest/v2/name/';
+// const searchQuery = 'Spain';
+// fetch(baseUrl + searchQuery)
+//   .then(response => response.json())
+//   .then(json => console.log(json));
+
+// fetchCountries('Ukraine');
