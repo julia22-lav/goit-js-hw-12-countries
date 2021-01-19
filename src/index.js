@@ -28,6 +28,7 @@ function createListMarkup(listItems) {
 
   if (listItems.length > 10) {
     notifications.onOverflow();
+    return '';
   }
 
   return listItems.map(item => `<li>${item.name}</li>`).join('');
